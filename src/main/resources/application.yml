@@ -1,0 +1,41 @@
+logging.level.org.zalando.logbook: TRACE
+
+server:
+  port: 8080
+
+management:
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+      liveness:
+        include: binders,diskSpace
+      readiness:
+        include: binders
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  metrics:
+    web:
+      server:
+        request:
+          autotime:
+            enabled: true
+
+
+logbook:
+  predicate:
+    exclude:
+      - path: /actuator/**
+  filter:
+    enabled: true
+  format:
+    style: http
+  obfuscate:
+    headers:
+      - Authorization
+  minimum-status: 200
+  write:
+    max-body-size: 500
+  strategy: body-only-if-status-at-least
