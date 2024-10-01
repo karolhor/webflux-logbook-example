@@ -1,4 +1,6 @@
-logging.level.org.zalando.logbook: TRACE
+logging.level:
+  com.github.karolhor: TRACE
+  org.zalando.logbook: TRACE
 
 server:
   port: 8080
@@ -23,19 +25,12 @@ management:
           autotime:
             enabled: true
 
-
 logbook:
-  predicate:
-    exclude:
-      - path: /actuator/**
-  filter:
-    enabled: true
-  format:
-    style: http
+  write:
+    max-body-size: 10000
   obfuscate:
+    replacement: "*****"
     headers:
       - Authorization
-  minimum-status: 200
-  write:
-    max-body-size: 500
-  strategy: body-only-if-status-at-least
+  format:
+    style: http
